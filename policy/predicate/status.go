@@ -47,7 +47,11 @@ func (pred HasSuccessfulStatus) Evaluate(ctx context.Context, prctx pull.Context
 			missingResults = append(missingResults, status)
 		}
 		if result != "success" {
-			failingStatuses = append(failingStatuses, status)
+		    if result == "skipped" {
+		        // Set the status to "error"
+		        predicateResult.Status = "error"
+		    }
+		    failingStatuses = append(failingStatuses, status)
 		}
 	}
 
